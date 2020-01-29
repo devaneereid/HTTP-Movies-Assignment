@@ -43,6 +43,18 @@ const UpdateMovie = props => {
         )
     };
 
+    const handleDelete = e => {
+        e.preventDefault();
+        axios
+            .delete(`http://localhost:5000/api/movies/${props.match.params.id}`)
+            .then(res => {
+                props.setItem(res.data)
+                props.history.push(`/`)
+                console.lot(res)
+            })
+            .catch(err => console.log(err.response))
+    };
+
     return(
         <div>
             <h2>Update Movie</h2>
@@ -76,6 +88,7 @@ const UpdateMovie = props => {
                         value={item.stars}
                         />
                     <button type='submit' onSubmit={handleSubmit}>Update Movie</button>
+                    <button className='delete-item' onClick={handleDelete}>Delete</button>
                 </form>
         </div>
     );
